@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: steelops_db
+    environment:
+      POSTGRES_DB: steelops_db
+      POSTGRES_USER: steelops
+      POSTGRES_PASSWORD: steelops_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - steelops_pgdata:/var/lib/postgresql/data
+      - ./backend/src/db/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U steelops -d steelops_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: steelops_api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://steelops:steelops_dev_password@postgres:5432/steelops_db
+      JWT_SECRET: dev_jwt_secret_change_in_production_min_64_chars_abc123xyz
+      JWT_REFRESH_SECRET: dev_refresh_secret_change_in_production_also_abc123xyz
+      JWT_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+      PORT: 3001
+      NODE_ENV: development
+      FRONTEND_URL: http://localhost:3000
+      # Leave SMTP_* unset in dev — alerts fall back to console logging (see .env.example)
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      ALERT_FROM_EMAIL: ${ALERT_FROM_EMAIL:-alerts@steelops.com}
+      UPLOAD_DIR: /app/uploads/documents
+    ports:
+      - "3001:3001"
+    volumes:
+      - steelops_uploads:/app/uploads
+    command: npm run dev
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: steelops_web
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+    ports:
+      - "3000:3000"
+    command: npm run dev
+
+volumes:
+  steelops_pgdata:
+    driver: local
+  steelops_uploads:
+    driver: local

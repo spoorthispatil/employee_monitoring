@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+html, body { font-family: 'Inter', system-ui, sans-serif; background: #FAFAF7; color: #1A1A1A; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+.card { @apply bg-white border border-brand-border rounded-xl p-5; }
+.kpi-card { @apply bg-white border border-brand-border rounded-xl px-4 py-3; }
+.kpi-label { @apply text-xs text-brand-gray uppercase tracking-wide mb-1; }
+.kpi-value { @apply text-2xl font-medium text-brand-dark; }
+.kpi-note  { @apply text-xs text-brand-gray mt-0.5; }
+.badge { @apply inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-md; }
+.badge-top     { @apply bg-green-100 text-green-800; }
+.badge-mid     { @apply bg-blue-100 text-blue-800; }
+.badge-poor    { @apply bg-red-100 text-red-800; }
+.badge-success { @apply bg-teal-100 text-teal-800; }
+.badge-warning { @apply bg-amber-100 text-amber-800; }
+.badge-info    { @apply bg-blue-50 text-blue-700; }
+.data-table { @apply w-full text-sm; }
+.data-table th { @apply text-left text-xs font-medium text-brand-gray uppercase tracking-wide py-2 px-3 bg-brand-gray_l border-b border-brand-border; }
+.data-table td { @apply py-2.5 px-3 border-b border-brand-border; }
+.data-table tr:hover td { @apply bg-brand-gray_l; }
+.data-table tr:last-child td { @apply border-b-0; }
+.btn-primary   { @apply px-4 py-2 bg-brand-purple text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer; }
+.btn-secondary { @apply px-4 py-2 bg-white border border-brand-border text-brand-dark rounded-lg text-sm font-medium hover:bg-brand-gray_l transition-colors cursor-pointer; }
+.btn-danger    { @apply px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors cursor-pointer; }
+.input  { @apply w-full px-3 py-2 border border-brand-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-brand-purple bg-white; }
+.label  { @apply block text-xs font-medium text-brand-gray mb-1.5 uppercase tracking-wide; }
+.nav-item { @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-brand-gray hover:text-brand-dark hover:bg-brand-gray_l transition-colors cursor-pointer; }
+.nav-item.active { @apply text-brand-purple bg-brand-purple_l font-medium; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D3D1C7; border-radius: 999px; }
