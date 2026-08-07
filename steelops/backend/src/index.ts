@@ -22,7 +22,7 @@ import {
 } from './modules/shared.routes';
 
 const app  = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001
 
 app.use(helmet());
 app.use(cors({

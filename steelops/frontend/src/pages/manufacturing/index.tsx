@@ -115,7 +115,7 @@ export default function ManufacturingPage(){
                   <div style={{fontSize:36,fontWeight:800,color:(selAgent.perf_score||0)>=80?'#2E7D32':(selAgent.perf_score||0)>=50?'#534AB7':'#C62828'}}>{selAgent.perf_score||0}</div>
                   <div style={{fontSize:11,color:'#aaa'}}>Weekly performance score</div>
                 </div>
-                {[['Tonnes/month',`${selAgent.total_tonnes_this_month||0}t`],['SGS pass rate',`${selAgent.sgs_pass_rate||0}%`],['Avg turnaround',`${selAgent.avg_task_turnaround_days?parseFloat(selAgent.avg_task_turnaround_days).toFixed(1):undefined||'—'}d`],['Overdue tasks',String(selAgent.overdue_tasks||0)]].map(([k,v])=>(
+                {[['Tonnes/month',`${selAgent.total_tonnes_this_month||0}t`],['SGS pass rate',`${selAgent.sgs_pass_rate||0}%`],['Avg turnaround',`${selAgent.avg_task_turnaround_days?parseFloat(selAgent.avg_task_turnaround_days).toFixed(1)+'d':'—'}`],['Overdue tasks',String(selAgent.overdue_tasks||0)]].map(([k,v])=>(
                   <div key={k} style={{display:'flex',justifyContent:'space-between',padding:'7px 0',borderBottom:'1px solid #F5F5F5',fontSize:12}}>
                     <span style={{color:'#888'}}>{k}</span><span style={{fontWeight:700}}>{v}</span>
                   </div>

@@ -8,8 +8,10 @@ import bcrypt from 'bcryptjs';
 
 const connectionString = process.env.DATABASE_URL ||
   'postgresql://steelops:steelops_dev_password@localhost:5432/steelops_db';
-
-const pool = new Pool({ connectionString });
+const pool = new Pool({
+  connectionString,
+  ssl: process.env.DATABASE_URL?.includes('render.com') ? { rejectUnauthorized: false } : false
+});
 
 async function q(text: string, params: any[] = []) {
   return (await pool.query(text, params)).rows;
